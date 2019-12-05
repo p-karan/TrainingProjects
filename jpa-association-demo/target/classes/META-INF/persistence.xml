@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
+             http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
+             version="2.1">
+
+    <persistence-unit name="myapp">
+
+        <description>JPA Association Demos</description><!--Description is optional-->
+        <class></class><!--We have to specify name of all model classes-->
+
+        <properties>
+            <!--database configuration details-->
+            <property name="javax.persistence.jdbc.driver" value="oracle.jdbc.driver.OracleDriver"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@localhost:1521:xe"/>
+            <property name="javax.persistence.jdbc.user" value="oracle"/>
+            <property name="javax.persistence.jdbc.password" value="oracle123"/>
+
+            <!--schema generation-->
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
+            <!--value can be 1.validate - If table is already create then it will validate
+            2.create - it drop an already exiting table and then recreate it
+            3.update - it no table then will generate else will use the existing one, if there is change in schema then will update
+            4.create-drop - it create the table when we start the app and drop when we stop the app-->
+
+            <!--dialect class  - help JPA to write code in specified DB as per value-->
+            <property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect"/>
+
+            <!--will display the exceuted query on console-->
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+
+        </properties>
+    </persistence-unit>
+
+</persistence>
