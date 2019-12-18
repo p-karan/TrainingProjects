@@ -1,0 +1,56 @@
+<!--{{customerList|json}}-->
+<table class="table table-striped">
+  <tr>
+    <td>Search By Loan Type:</td>
+    <td><input [(ngModel)]="srchString"></td>
+  </tr>
+  <tr>
+    <th>Edit</th>
+    <th>Delete</th>
+    <th>Loan Id</th>
+    <th>Loan Type</th>
+    <th>Opening Date</th>
+    <th>Closing Date</th>
+    <th>Loan Amount</th>
+  </tr>
+  <tr *ngFor="let eachCustomer of customerList | filter: 'loanType': srchString | paginate: {itemsPerPage: 4, currentPage: p}">
+    <td><button (click)="edit(eachCustomer)" class="btn btn-info fa fa-edit"></button></td>
+    <td><button (click)="delete(eachCustomer)" class="btn btn-danger fa fa-remove"></button></td>
+    <td>{{eachCustomer.loanId}}</td>
+    <td>{{eachCustomer.loanType | uppercase}}</td>
+    <td>{{eachCustomer.openDate| date: 'MMM dd, yyyy'}}</td>
+    <td>{{eachCustomer.closingDate| date:'shortDate'}}</td>
+    <td>{{eachCustomer.loanAmount | currency:'INR'}}</td>
+  </tr>
+</table>
+
+<pagination-controls (pageChange)="p=$event"></pagination-controls>
+
+<form (ngSubmit)="onSubmit(frm.value)" #frm=ngForm ngNativeValidate>
+
+  <div>
+    <label for="">Loan Id</label>
+    <input type="text" [(ngModel)]="customer.loanId" name="loanId" required="required">
+  </div>
+  <div>
+    <label for="">Loan Type</label>
+    <select name="loanType" [(ngModel)]="customer.loanType" >
+      <option *ngFor="let eachLoanType of loanType" [value]=eachLoanType>{{eachLoanType}}</option>
+    </select>
+  </div>
+  <div>
+    <label for="">Opening Date</label>
+    <input type="date" [(ngModel)]="customer.openDate" name="openDate">
+  </div>
+  <div>
+    <label for="">Closing Date</label>
+    <input type="date" [(ngModel)]="customer.closingDate" name="closeDate">
+  </div>
+  <div>
+    <label for="">Loan Amount</label>
+    <input type="text" [(ngModel)]="customer.loanAmount" name="loanAmount">
+  </div>
+
+  <button [textContent]="btnText"></button>
+
+</form>

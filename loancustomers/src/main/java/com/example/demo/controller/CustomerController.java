@@ -10,7 +10,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin(value="*")
@@ -26,7 +26,7 @@ public class CustomerController {
     @Value("${eureka.instance.instance-id}")
     private String instanceId;
 
-    @PostMapping("/customer")
+    @PostMapping(value="/customer", produces = "application/json", consumes = "application/json")
     public LoanCustomer addCustomer(@RequestBody LoanCustomer customer){
         return this.service.addCustomer(customer);
     }
@@ -35,6 +35,11 @@ public class CustomerController {
     public String getPort(){
         String portNumber=env.getProperty("local.server.port");
         return portNumber+instanceId;
+    }
+
+    @GetMapping(value = "/customer/{id}")
+    public Optional<LoanCustomer> findById(@PathVariable("id")long loanId){
+        return this.service.findById(loanId);
     }
 
     @GetMapping("/customer")
@@ -57,5 +62,14 @@ public class CustomerController {
         return this.service.paginate(pageNo,size,propName);
     }
 
+    @PutMapping(value="/customer", produces = "application/json", consumes = "application/json")
+    public LoanCustomer updateCustomer(@RequestBody LoanCustomer loanCustomer){
+        return this.service.updateCustomer(loanCustomer);
+    }
+
+    @DeleteMapping(value="/customer/{loanId}")
+        public boolean deleteCustomerById(@PathVariable("loanId") long loanId){
+        return this.service.deleteCustomerById(loanId);
+    }
 
 }

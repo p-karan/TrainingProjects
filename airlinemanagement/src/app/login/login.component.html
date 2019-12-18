@@ -1,0 +1,13 @@
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()" >
+  <ng-container *ngFor="let eachConfig of formConfig">
+    <div class="form-group">
+    <label>{{eachConfig.label}}</label>
+    <input type={{eachConfig.type}} formControlName={{eachConfig.name}} class="form-control"/>
+    <span *ngIf="loginForm.get(eachConfig.name).hasError('required') && loginForm.get(eachConfig.name).touched">{{eachConfig.errorMsg}}</span>
+      <span *ngIf="(loginForm.get(eachConfig.name).hasError('maxlength') || loginForm.get(eachConfig.name).hasError('minlength')) && loginForm.get(eachConfig.name).touched">{{"Field length error"}}</span>
+    </div>
+  </ng-container>
+
+  <input type="submit" value="Login">
+  {{loginStatus}}
+</form>
